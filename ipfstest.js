@@ -111,6 +111,9 @@ const main = async () => {
         timestampISO: new Date().toISOString()
       });
     }
+    await sleep(1500);
+    await node.shutdown();
+    console.log('Test concluso con successo');
   } catch (error) {
     console.log(error);
   }
