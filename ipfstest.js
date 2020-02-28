@@ -8,8 +8,11 @@ const inputBuses = 'inputDataset1.csv';
 
 const liner = new lineByLine(inputBuses);
 
+const skynet = require('@nebulous/skynet');
+
 const tempDir = 'tests';
-let dir;
+const tempDirSia = 'testsSia';
+let dir, dirSia;
 
 const busConst = [
   '110',
@@ -29,15 +32,27 @@ let node, version;
 const init = async () => {
   try{
     dir = tempDir+'\\'+ new Date().toISOString().replace(":", "_").replace(":", "_");
+    dirSia = tempDirSia+'\\'+ new Date().toISOString().replace(":", "_").replace(":", "_");
     if (!fs.existsSync(dir)) fs.mkdirSync(dir);
-
+    if (!fs.existsSync(dirSia)) fs.mkdirSync(dirSia);
     for (let i = 0; i < busConst.length; i++) {
       // Create log file
       if (!fs.existsSync(dir)) fs.mkdirSync(dir);
+      if (!fs.existsSync(dirSia)) fs.mkdirSync(dirSia);
       const filepath = (
         dir + '\\bus-' + busConst[i] + '.csv');
       fs.writeFile(
         filepath,
+        'id, latitude, longitude, timestamp, executionTime\n',
+        err => {
+          if (err) throw err;
+        }
+      );
+      sleep(50);
+      const filepathSia = (
+        dirSia + '\\bus-' + busConst[i] + '.csv');
+      fs.writeFile(
+        filepathSia,
         'id, latitude, longitude, timestamp, executionTime\n',
         err => {
           if (err) throw err;
@@ -76,7 +91,7 @@ const publish = async (b, id, json) => {
       content: str
     });
     execTime = new Date().getTime() - startTS;
-    console.log('# Bus '+b+' added in '+execTime+' ms');
+    console.log('# Bus '+b+' added in '+execTime+' ms to IPFS');
     //stampa il nome del file aggiunto e la sua hash
     console.log('# Added file:', filesAdded[0].path, filesAdded[0].hash);
 
@@ -98,6 +113,41 @@ const publish = async (b, id, json) => {
 };
 
 
+const publishSia = async (b, id, json) => {
+  let execTime;
+  try {
+    var fs = require('fs');
+    await fs.writeFile("temp.json", JSON.stringify(json), function(err) {
+      if (err) {
+          console.log(err);
+      }
+    });
+
+    startTS = new Date().getTime();
+    const skylink = await skynet.UploadFile(
+      "./temp.json",
+      skynet.DefaultUploadOptions
+    );
+    execTime = new Date().getTime() - startTS;
+    console.log('# Bus '+b+' added in '+execTime+' ms to SkyNet');
+    console.log(`# Available at skylink: ${skylink}`);
+        
+  
+  } catch(err){
+    console.log(b + ': ' + err);
+  } finally {
+    fs.appendFile(
+      dirSia+'\\bus-'+b+'.csv',
+      parseInt(id)+', '+json['payload']['latitude']+', '+json['payload']['longitude']+', '+json['timestampISO']+', '+execTime+'\n',
+      err => {
+        if (err) throw err;
+      }
+    );
+  }
+};
+
+
+
 const main = async () => {
   try {
     await init();
@@ -107,6 +157,10 @@ const main = async () => {
       console.log('Waiting ' + row[0] + ' seconds for bus ' + row[1]);
       await sleep(parseInt(row[0]) * 1000);
       publish(row[1], row[4], {
+        payload: { latitude: row[2], longitude: row[3] },
+        timestampISO: new Date().toISOString()
+      });
+      publishSia(row[1], row[4], {
         payload: { latitude: row[2], longitude: row[3] },
         timestampISO: new Date().toISOString()
       });
