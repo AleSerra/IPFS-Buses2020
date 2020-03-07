@@ -31,7 +31,6 @@ def sia_plot():
             valori =[]
             x = []
             y = []
-            #print("open"+test+'\\bus-'+bus+'.csv') 
             csv_reader1 = csv.reader(csv_file1, delimiter=',')
             next(csv_reader1)
             for row in csv_reader1:
@@ -45,11 +44,7 @@ def sia_plot():
                 x.append("2")
                 y.append(valori[turn+2])
                 x.append("3")
-                y.append(valori[turn+3]) 
-                #print ('x: ')
-                #print (x)
-                #print('y: ')
-                #print (y)
+                y.append(valori[turn+3])
                 plt.plot(x,y,'--o',label='Graph for: Test '+str(val))
                 x=[]
                 y=[]
@@ -62,8 +57,7 @@ def ipfs_plot():
         with open(test) as csv_file:
             valori =[]
             x = []
-            y = []
-            #print("open"+test+'\\bus-'+bus+'.csv') 
+            y = [] 
             csv_reader = csv.reader(csv_file, delimiter=',')
             next(csv_reader)
             for row in csv_reader:
@@ -77,11 +71,7 @@ def ipfs_plot():
                 x.append("2")
                 y.append(valori[turn+2])
                 x.append("3")
-                y.append(valori[turn+3]) 
-                #print ('x: ')
-                #print (x)
-                #print('y: ')
-                #print (y)
+                y.append(valori[turn+3])
                 plt.subplot(1,2,1)     
                 plt.plot(x,y,'--o', label='Graph for: Test '+str(val))
                 plt.title('--- TEST DOWNLOAD IPFS ---')
