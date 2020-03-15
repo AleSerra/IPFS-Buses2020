@@ -1,3 +1,3 @@
-ipfs - sia = 9
-big = 13
-downlod = 13
+ipfs - sia = 14
+big = 14
+downlod = 14
