@@ -1,3 +1,0 @@
-ipfs - sia = 19
-big = 19
-download = 19
