@@ -57,7 +57,6 @@ def ipfs_plot():
     plt.xlabel('FILE')
     plt.ylabel('EXECUTION_TIME(ms)')
     plt.legend(loc='best')
-    #fig = plt.figure()
     manager = plt.get_current_fig_manager()
     manager.resize(*manager.window.maxsize())
     plt.show()
