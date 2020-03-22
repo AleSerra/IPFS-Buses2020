@@ -12,7 +12,7 @@ Di seguito la descrizione dei vari script e cartelle presenti:
 #### Cartelle
 - <b>/bigfile</b>: Cartella contenente i file di esempio per lo script "<i>bigFileIpfsSiaTest.js</i>"
 - <b>/bigfiletests</b>: Cartella contenente i risultati dei test ottenuti dallo script "<i>bigFileIpfsSiaTest.js</i>", divisi per rete IPFS e rete SkyNet
-- <b>/dataset</b>: ...
+- <b>/dataset</b>: Cartella contenente i dataset di partenza con le informazioni delle fermate dei bus di Rio
 - <b>/download</b>: Cartella contenente i file scaricati dallo script "<i>downloadTest.js</i>"
 - <b>/downtests</b>: Cartella contenente i risultati dei test ottenuti dallo script "<i>downloadTest.js</i>", divisi per rete IPFS e rete SkyNet
 - <b>/grafici</b>: ...
