@@ -1,6 +1,7 @@
 import csv
 import os
 import matplotlib.pyplot as plt
+from matplotlib.font_manager import FontProperties
 import math
 import sys
 
@@ -12,6 +13,9 @@ bigtests_list_sia = list()
 if not sys.warnoptions:
     import warnings
     warnings.simplefilter("ignore")
+
+fontP = FontProperties()
+fontP.set_size(7)
 
 #Calcolo percorso cartella test ipfs
 for root, dirs, files in os.walk(".\\bigfiletests\\tests", topdown=False):
@@ -50,13 +54,13 @@ def ipfs_plot():
         plt.title('--- TEST IPFS BIG FILE---')
         plt.xlabel('FILE')
         plt.ylabel('EXECUTION_TIME(ms)')
-        plt.legend(loc='best')
+        plt.legend(loc='best',prop=fontP)
     plt.subplot(1,2,2)
     sia_plot()
     plt.title('--- TEST SIA BIG FILE---')
     plt.xlabel('FILE')
     plt.ylabel('EXECUTION_TIME(ms)')
-    plt.legend(loc='best')
+    plt.legend(loc='best',prop=fontP)
     manager = plt.get_current_fig_manager()
     manager.resize(*manager.window.maxsize())
     plt.show()

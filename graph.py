@@ -1,6 +1,7 @@
 import csv
 import os
 import matplotlib.pyplot as plt
+from matplotlib.font_manager import FontProperties
 import math
 import sys
 import numpy as np
@@ -65,6 +66,9 @@ for root, dirs, files in os.walk(".\\testsSia", topdown=False):
   '422'
 ]
 
+fontP = FontProperties()
+fontP.set_size(7)
+
 def sia_plot(bus):
     for test in tests_list_sia: 
         with open(test+'\\bus-'+bus+'.csv') as csv_file:
@@ -95,13 +99,13 @@ def ipfs_plot():
             plt.title('--- TEST IPFS --- BUS: '+bus)
             plt.xlabel('ID')
             plt.ylabel('EXECUTION_TIME(ms)')
-            plt.legend(loc='best')
+            plt.legend(loc='best', prop=fontP)
         plt.subplot(1,2,2)
         sia_plot(bus)
         plt.title('--- TEST SIA --- BUS: '+bus)
         plt.xlabel('ID')
         plt.ylabel('EXECUTION_TIME(ms)')
-        legend=plt.legend(loc='best')
+        legend=plt.legend(loc='best', prop=fontP)
         manager = plt.get_current_fig_manager()
         manager.resize(*manager.window.maxsize())
         export_legend(legend)
